@@ -487,7 +487,7 @@ function share(){
   const jp=document.getElementById('result-jp').textContent.replace(/^— /,'').replace(/ —$/,'');
   const cat=document.getElementById('result-catch').textContent;
   const faction=document.getElementById('result-fb').textContent.split('—')[0].trim();
-  const txt=`【ワンダースロット キャラクター診断結果】\n所属：${faction}\nキャラクター：${name}（${jp}）\n「${cat}」\n#ワンダースロット #マーダーミステリー`;
+  const txt=`【ワンダースロット キャラクター診断結果】\n所属：${faction}\nキャラクター：${name}（${jp}）\n「${cat}」\n#アナアキー #ワンダースロット`;
   if(navigator.clipboard){
     navigator.clipboard.writeText(txt).then(()=>{
       const t=document.getElementById('toast');
