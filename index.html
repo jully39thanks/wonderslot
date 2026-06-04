@@ -2,277 +2,366 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WONDER SLOT HO診断</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ワンダースロット キャラクター診断</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a2e;
-    color: #fff;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-image: url('bg.jpg'); /* 元の背景画像 */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
-  .container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: rgba(15, 23, 42, 0.9);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    border: 2px solid #3b82f6;
-  }
-  h1 {
-    color: #3b82f6;
-    margin-bottom: 20px;
-  }
-  .btn {
-    display: block;
-    width: 80%;
-    margin: 15px auto;
-    padding: 15px;
-    font-size: 18px;
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  .btn:hover {
-    background-color: #1d4ed8;
-  }
-  .btn-container {
-    margin-top: 30px;
-  }
-  /* キャラクター・KV画像表示エリア */
-  .image-container {
-    margin-bottom: 20px;
-  }
-  .image-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  }
-  .hidden {
-    display: none;
-  }
-  .result-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #f59e0b;
-    margin-top: 20px;
-  }
-  .result-desc {
-    margin-top: 15px;
-    font-size: 16px;
-    line-height: 1.6;
-    text-align: left;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:#050508;color:#e8dcc8;font-family:'Noto Sans JP',sans-serif;overflow-x:hidden}
+
+/* BG */
+.page-bg{
+  position:fixed;inset:0;z-index:0;
+  background-image:url('bg.jpg');
+  background-size:cover;background-position:center;background-repeat:no-repeat
+}
+.page-bg::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at center,rgba(5,5,8,0.4) 0%,rgba(5,5,8,0.95) 100%);
+  background-color:rgba(5,5,8,0.6)
+}
+
+/* Container */
+.wrapper{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:40px 20px;min-height:100vh}
+.main-card{
+  width:100%;max-width:480px;background:rgba(13,13,23,0.85);
+  border:1px solid rgba(232,220,200,0.15);border-radius:16px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.8);backdrop-filter:blur(12px);
+  padding:32px 24px;margin:auto;text-align:center;
+  transform:translateY(0);transition:all .4s cubic-bezier(0.16,1,0.3,1)
+}
+
+/* Global Elements */
+.header-title{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:3px;color:#fff;text-shadow:0 0 10px rgba(255,255,255,0.2);margin-bottom:4px}
+.header-sub{font-size:.85rem;letter-spacing:4px;color:#a39785;text-transform:uppercase;margin-bottom:28px;font-weight:700}
+.divider{width:40px;height:2px;background:#e8dcc8;margin:0 auto 28px;opacity:0.3}
+
+/* Screens */
+.screen{display:none;animation:fadeIn .5s ease forwards}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* KV */
+.kv-area{width:100%;border-radius:8px;overflow:hidden;margin-bottom:28px;border:1px solid rgba(232,220,200,0.1);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+.kv-area img{width:100%;display:block;height:auto}
+
+/* Buttons */
+.btn-group{display:flex;flex-direction:column;gap:14px;margin-top:28px}
+.btn{
+  position:relative;width:100%;padding:16px 24px;background:transparent;
+  border:1px solid rgba(232,220,200,0.3);border-radius:8px;
+  color:#e8dcc8;font-size:1rem;font-weight:700;letter-spacing:1px;
+  cursor:pointer;overflow:hidden;transition:all .3s ease
+}
+.btn::before{
+  content:'';position:absolute;inset:0;background:#e8dcc8;
+  transform:scaleX(0);transform-origin:right;transition:transform .3s cubic-bezier(0.16,1,0.3,1);z-index:-1
+}
+.btn:hover{color:#050508;border-color:#e8dcc8;box-shadow:0 0 15px rgba(232,220,200,0.2)}
+.btn:hover::before{transform:scaleX(1);transform-origin:left}
+
+.btn-choice-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.btn-yes{border-color:rgba(141,211,187,0.4);color:#8dd3bb}
+.btn-yes:hover{color:#050508;border-color:#8dd3bb;box-shadow:0 0 15px rgba(141,211,187,0.3)}
+.btn-yes::before{background:#8dd3bb}
+.btn-no{border-color:rgba(251,128,114,0.4);color:#fb8072}
+.btn-no:hover{color:#050508;border-color:#fb8072;box-shadow:0 0 15px rgba(251,128,114,0.3)}
+.btn-no::before{background:#fb8072}
+
+/* Question Area */
+.progress-container{display:flex;justify-content:center;gap:6px;margin-bottom:24px}
+.progress-dot{width:6px;height:6px;border-radius:50%;background:rgba(232,220,200,0.15);transition:all .3s ease}
+.progress-dot.active{background:#e8dcc8;box-shadow:0 0 8px #e8dcc8;transform:scale(1.2)}
+.progress-dot.passed{background:rgba(232,220,200,0.5)}
+.q-text{font-size:1.1rem;line-height:1.7;font-weight:500;min-height:56px;display:flex;align-items:center;justify-content:center;padding:0 8px}
+
+/* Result Screen */
+.result-img-wrapper{
+  width:100%;border-radius:8px;overflow:hidden;margin-bottom:24px;
+  border:1px solid rgba(232,220,200,0.15);box-shadow:0 12px 32px rgba(0,0,0,0.6);background:#09090f
+}
+.result-img-wrapper img{width:100%;display:block;height:auto}
+.result-faction-badge{
+  display:inline-block;padding:4px 12px;font-size:.75rem;font-weight:900;
+  letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;margin-bottom:16px
+}
+.rfb-grant{background:rgba(141,211,187,0.15);color:#8dd3bb;border:1px solid rgba(141,211,187,0.3)}
+.rfb-east{background:rgba(251,128,114,0.15);color:#fb8072;border:1px solid rgba(251,128,114,0.3)}
+.result-name{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:2px;line-height:1;margin-bottom:4px}
+.result-name-grant{color:#8dd3bb;text-shadow:0 0 15px rgba(141,211,187,0.2)}
+.result-name-east{color:#fb8072;text-shadow:0 0 15px rgba(251,128,114,0.2)}
+.result-jp{font-size:.85rem;letter-spacing:3px;color:#a39785;margin-bottom:20px;font-weight:700}
+.result-catch{font-size:1.05rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:16px;padding:0 10px}
+.result-profile{font-size:.88rem;line-height:1.7;color:#c5b9a5;text-align:left;background:rgba(5,5,8,0.4);padding:16px;border-radius:8px;margin-bottom:28px}
 </style>
 </head>
 <body>
+<div class="page-bg"></div>
+<div class="wrapper">
+  <div class="main-card">
+    <div class="header-title">WONDER SLOT</div>
+    <div class="header-sub">Character Diagnosis</div>
+    <div class="divider"></div>
 
-<div class="container">
-  <!-- タイトル -->
-  <h1 id="title-text">WONDER SLOT HO診断</h1>
+    <div id="screen-start" class="screen active">
+      <div class="kv-area">
+        <img src="KV_wanderslot.jpg" alt="WONDER SLOT">
+      </div>
+      <div class="btn-group">
+        <button class="btn" onclick="startDiag()">診断を開始する</button>
+      </div>
+    </div>
 
-  <!-- 画像表示エリア（初期はKV、結果時はキャラ絵に変倍） -->
-  <div class="image-container">
-    <img id="display-image" src="KV_wanderslot.jpg" alt="WONDER SLOT">
-  </div>
+    <div id="screen-question" class="screen">
+      <div class="progress-container" id="progress-dots"></div>
+      <div class="q-text" id="question-text"></div>
+      <div class="btn-choice-group">
+        <button class="btn btn-yes" id="btn-y" onclick="ans(true)">YES</button>
+        <button class="btn btn-no" id="btn-n" onclick="ans(false)">NO</button>
+      </div>
+    </div>
 
-  <!-- 質問・説明文テキスト -->
-  <div id="question-text" style="font-size: 18px; margin: 20px 0; min-height: 60px;">
-    あなたにマッチするハンドアウト(HO)を診断します。
-  </div>
-
-  <!-- ボタンエリア -->
-  <div class="btn-container">
-    <button id="btn-left" class="btn" onclick="handleChoice(true)">診断をスタートする</button>
-    <button id="btn-right" class="btn hidden" onclick="handleChoice(false)">NO</button>
+    <div id="screen-result" class="screen">
+      <div class="result-img-wrapper">
+        <img id="result-img" src="" alt="">
+      </div>
+      <div id="result-fb" class="result-faction-badge"></div>
+      <div id="result-name" class="result-name"></div>
+      <div id="result-jp" class="result-jp"></div>
+      <div id="result-catch" class="result-catch"></div>
+      <div id="result-profile" class="result-profile"></div>
+      <div class="btn-group">
+        <button class="btn" onclick="share()">結果をシェアする</button>
+        <button class="btn" style="border-color:rgba(232,220,200,0.15);color:#a39785" onclick="restart()">もう一度診断する</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-// キャラクターデータ（画像パス、テキストを完全保持）
-const characters = {
-  DADDY: { name: "HO DADDY", img: "daddy.jpg", desc: "冷静沈着な一家の大黒柱。周囲をまとめ上げ、圧倒的な包容力と決断力で家族を正しい道へと導くポジションです。", route: "grant" },
-  MOMMY: { name: "HO MOMMY", img: "mommy.jpg", desc: "自由奔放でチャーミングな美魔女。お茶目な魅力の裏で巧みに情報を操り、場を翻弄するポジションです。", route: "grant" },
-  BROTHER: { name: "HO BROTHER", img: "brother.jpg", desc: "正義感あふれる真っ直ぐな好青年。嘘偽りのない誠実さと、家族のために体を張る熱い行動力が魅力のポジションです。", route: "grant" },
-  SISTER: { name: "HO SISTER", img: "sister.jpg", desc: "好奇心旺盛で器用な情報通ギャル。人当たりの良さを武器にターゲットの懐に潜り込み、スクープを持ち帰るポジションです。", route: "grant" },
-  KID: { name: "HO KID", img: "kid.jpg", desc: "大人を領駕する知能を持つ若き知能派。感情に流されず、緻密な計算とスキルで家族の危機をスマートに救うポジションです。", route: "grant" },
-  MAID: { name: "HO MAID", img: "maid.jpg", desc: "クールに仕事を完遂する凄腕の用心棒。無駄な会話を好まず、与えられたミッションを確実に物理で解決するポジションです。", route: "grant" },
-  SECOND: { name: "HO SECOND", img: "second.jpg", desc: "策略とカリスマで君臨する組織のボス。周囲を従わせる威厳と、冷徹とも言える策略でチームを勝利へ導くポジションです。", route: "east" },
-  HAMMER: { name: "HO HAMMER", img: "hammer.jpg", desc: "拳で語る最強の武闘派戦闘員。威圧的な態度と破壊的な戦闘力で、立ち塞がる敵を力技でねじ伏せるポジションです。", route: "east" },
-  VEIN: { name: "HO VEIN", img: "vein.jpg", desc: "鋭い観察眼を持つ冷静な交渉役。裏社会の流通や取引を支配し、相手の本心を見抜いて冷徹に有利な条件を引き出すポジションです。", route: "east" },
-  WIRE: { name: "HO WIRE", img: "wire.jpg", desc: "サバサバした性格の技術屋。専門的な技術を武器に、状況に応じた最適なトラップやガジェットを駆使するポジションです。", route: "east" },
-  CHARM: { name: "HO CHARM", img: "charm.jpg", desc: "愛嬌と度胸を武器にする不敵な交渉屋。物怖じしないスタンスで相手の懐へ飛び込み、主導権を奪うポジションです。", route: "east" },
-  HAWK: { name: "HO HAWK", img: "hawk.jpg", desc: "静寂の中で獲物を射抜く凄腕スナイパー。気配を消し、確実に一撃で仕事をこなす遠距離支援ポジションです。", route: "east" }
+const CHARS={
+  'HO DADDY':{faction:'grant',jp:'ダディ',catch:'「家族を守るためなら、俺はどんな泥をも啜るさ」',profile:'冷静沈着な一家の大黒柱。周囲をまとめ上げ、圧倒的な包容力と決断力で家族を正しい道へと導くポジションです。'},
+  'HO MOMMY':{faction:'grant',jp:'マミー',catch:'「あら、私の可愛い坊やたち。ママの言うことが聞けないの？」',profile:'自由奔放でチャーミングな美魔女。お茶目な魅力の裏で巧みに情報を操り、場を翻弄するポジションです。'},
+  'HO BROTHER':{faction:'grant',jp:'ブラザー',catch:'「うるせえ！俺たちの絆を、アンタなんかに笑われてたまるか！」',profile:'正義感あふれる真っ直ぐな好青年。嘘偽りのない誠実さと、家族のために体を張る熱い行動力が魅力のポジションです。'},
+  'HO SISTER':{faction:'grant',jp:'シスター',catch:'「ウケるー！あいつの秘密、全部掴んじゃった。ねえ、次どうする？」',profile:'好奇心旺盛で器用な情報通ギャル。人当たりの良さを武器にターゲットの懐に潜り込み、スクープを持ち帰るポジションです。'},
+  'HO KID':{faction:'grant',jp:'キッド',catch:'「ボクの計算に狂いはないよ。さあ、ゲームをはじめよう」',profile:'大人を凌駕する知能を持つ若き知能派。感情に流されず、緻密な計算とスキルで家族の危機をスマートに救うポジションです。'},
+  'HO MAID':{faction:'grant',jp:'メイド',catch:'「……障害の排除を完了しました。次のご指示を」',profile:'クールに仕事を完遂する凄腕の用心棒。無駄な会話を好まず、与えられたミッションを確実に物理で解決するポジションです。'},
+  'HO SECOND':{faction:'east',jp:'セカンド',catch:'「犬の分際で、この私に牙を剥こうなどと……身の程を知れ」',profile:'策略とカリスマで君臨する組織のボス。周囲を従わせる威厳と、冷徹とも言える策略でチームを勝利へ導くポジションです。'},
+  'HO HAMMER':{faction:'east',jp:'ハマー',catch:'「ハッ！口で言って解らねえなら、そのツラごと叩き潰すだけだ！」',profile:'拳で語る最強の武闘派戦闘員。威圧的な態度と破壊的な戦闘力で、立ち塞がる敵を力技でねじ伏せるポジションです。'},
+  'HO VEIN':{faction:'east',jp:'ヴェイン',catch:'「お前の命の価値、ここで測ってやろう。……思ったより安いな」',profile:'鋭い観察眼を持つ冷静な交渉役。裏社会の流通や取引を支配し、相手の本心を見抜いて冷徹に有利な条件を引き出すポジションです。'},
+  'HO WIRE':{faction:'east',jp:'ワイヤー',catch:'「あはは！私の可愛いオモチャたちが、あんたを切り刻みたがってるよ」',profile:'サバサバした性格の技術屋。専門的な技術を武器に、状況に応じた最適なトラップやガジェットを駆使するポジションです。'},
+  'HO CHARM':{faction:'east',jp:'チャーム',catch:'「ねえ、おじさん。私のお願い、聞いてくれないかなぁ？……ダメ？」',profile:'愛嬌と度胸を武器にする不敵な交渉屋。物怖じしないスタンスで相手の懐へ飛び込み、主導権を奪うポジションです。'},
+  'HO HAWK':{faction:'east',jp:'ホーク',catch:'「ターゲット確認。……チェックメイトだ」',profile:'静寂の中で獲物を射抜く凄腕スナイパー。気配を消し、確実に一撃で仕事をこなす遠距離支援ポジションです。'}
 };
 
-// 状態変数
-let step = 0; 
-let route = ""; 
-let excluded = new Set(); 
+const CHAR_IMGS={
+  'HO DADDY':'daddy.jpg','HO MOMMY':'mommy.jpg','HO BROTHER':'brother.jpg','HO SISTER':'sister.jpg','HO KID':'kid.jpg','HO MAID':'maid.jpg',
+  'HO SECOND':'second.jpg','HO HAMMER':'hammer.jpg','HO VEIN':'vein.jpg','HO WIRE':'wire.jpg','HO CHARM':'charm.jpg','HO HAWK':'hawk.jpg'
+};
 
-// 質問データの定義
-function getQuestionText(stepIndex) {
-  const questions = [
-    { text: "物語の中で特定の相手との恋愛・夫婦的なやり取り（RP）は避けたいですか?", type: "filter", tag: ["BROTHER", "CHARM", "DADDY", "MOMMY"] },
-    { text: "全体をまとめたり指揮を執ったりする『リーダー役』は苦手ですか?", type: "filter", tag: ["DADDY", "SECOND"] },
-    { text: "威圧的な態度をとったり厳しい言葉を使ったりするキャラクターは避けたいですか?", type: "filter", tag: ["HAMMER", "SECOND"] },
-    { text: "あまり喋らない『クール・寡黙すぎる』キャラクターよりもたくさん会話を楽しめるキャラがいいですか?", type: "filter", tag: ["MAID", "HAWK"] },
-    { text: "あなたが惹かれるのは、正義のために悪を成敗する『義賊の絆』ですか?", type: "route_select" }
-  ];
-  
-  if (stepIndex < 5) return questions[stepIndex];
+// 地雷チェック用（Q1〜Q4のYESで除外対象を保持）
+let excluded = new Set();
+let fi = 0; // フィルター質問のインデックス (0〜3)
+let factionBranch = null; // 'grant' または 'east'
+let dStep = 0; // 陣営決定後のステップ進行状況
 
-  // 義賊ルート（グラントファミリー）の詳細分岐
-  if (route === "grant") {
-    if (stepIndex === 5) return { text: "チームを引っ張るリーダーシップや、大人の落ち着き・包容力に魅力を感じますか?", type: "branch" };
-    if (stepIndex === 6) return { text: "どちらかと言えば、自分から積極的に楽しむ自由奔放なタイプですか?", type: "branch" };
-    {/* Q7-A1の断絶を解消: 頭脳・スキル派か、武闘派（MAID/BROTHER）かを問う質問 */}
-    if (stepIndex === 7) return { text: "頭脳・スキル・情報収集を活かす『Brain』タイプと、前線で戦う『Fighter』タイプならどちらが好きですか?", type: "branch", labels: ["Brain", "Fighter"] };
-    if (stepIndex === 8) return { text: "場を盛り上げる、明るく賑やかなキャラクターがいいですか?", type: "branch" };
-    if (stepIndex === 9) return { text: "自分の感情をあまり表に出さない、クールでストイックな仕事人に惹かれますか?", type: "branch" };
-  } 
-  
-  // ギャングルート（イーストハウンズ）の詳細分岐
-  if (route === "east") {
-    if (stepIndex === 5) return { text: "組織を引っ張るボスや、圧倒的な戦闘力で前線を張り、敵をねじ伏せる役割が好きですか?", type: "branch" };
-    if (stepIndex === 6) return { text: "知略やカリスマで周囲を従わせるよりも、自分の『拳や行動』で語る方が魅力的ですか?", type: "branch" };
-    if (stepIndex === 7) return { text: "爆弾や狙撃など、物理的な『特殊技術』を扱うポジションに惹かれますか?", type: "branch" };
-    if (stepIndex === 8) return { text: "サバサバした性格で、機械や爆破物を扱うのが得意な方がいいですか?", type: "branch" };
-    if (stepIndex === 9) return { text: "愛嬌を武器に相手の懐に飛び込むような、物怖じしないタイプが好きですか?", type: "branch" };
+const FILTERS = [
+  {text:'物語の中で特定の相手との恋愛・夫婦的なやり取り（RP）は避けたいですか？', tags:['HO DADDY','HO MOMMY','HO BROTHER','HO CHARM']},
+  {text:'全体をまとめたり指揮を執ったりする『リーダー役』は苦手ですか？', tags:['HO DADDY','HO SECOND']},
+  {text:'威圧的な態度をとったり厳しい言葉を使ったりするキャラクターは避けたいですか？', tags:['HO HAMMER','HO SECOND']},
+  {text:'あまり喋らない『クール・寡黙すぎる』キャラクターよりもたくさん会話を楽しめるキャラがいいですか？', tags:['HO MAID','HO HAWK']}
+];
+
+const FACTION_Q = {text:'あなたが惹かれるのは、正義のために悪を成敗する『義賊の絆』ですか？'};
+
+// 陣営別の分岐ツリー質問
+const BRANCH_QS = {
+  grant: [
+    {text:'チームを引っ張るリーダーシップや、大人の落ち着き・包容力に魅力を感じますか？'}, // dStep=0
+    {text:'どちらかと言えば、自分から積極的に楽しむ自由奔放なタイプですか？'},           // dStep=1
+    {text:'頭脳・スキル・情報収集を活かす『Brain』タイプと、前線で戦う『Fighter』タイプならどちらが好きですか？', labels:['Brain','Fighter']}, // dStep=2
+    {text:'場を盛り上げる、明るく賑やかなキャラクターがいいですか？'},                     // dStep=3
+    {text:'自分の感情をあまり表に出さない、クールでストイックな仕事人に惹かれますか？'}     // dStep=4
+  ],
+  east: [
+    {text:'組織を引っ張るボスや、圧倒的な戦闘力で前線を張り、敵をねじ伏せる役割が好きですか？'}, // dStep=0
+    {text:'知略やカリスマで周囲を従わせるよりも、自分の『拳や行動』で語る方が魅力的ですか？'}, // dStep=1
+    {text:'爆弾や狙撃など、物理的な『特殊技術』を扱うポジションに惹かれますか？'},           // dStep=2
+    {text:'サバサバした性格で、機械や爆破物を扱うのが得意な方がいいですか？'},               // dStep=3
+    {text:'愛嬌を武器に相手の懐に飛び込むような、物怖じしないタイプが好きですか？'}         // dStep=4
+  ]
+};
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+}
+
+function initDots(total){
+  const c = document.getElementById('progress-dots');
+  c.innerHTML = '';
+  for(let i=0; i<total; i++){
+    const d = document.createElement('div');
+    d.className = 'progress-dot' + (i===0?' active':'');
+    c.appendChild(d);
   }
 }
 
-// ボタンクリック時の進行制御
-function handleChoice(isYes) {
-  // スタート画面からの遷移
-  if (step === 0) {
-    step = 1;
-    document.getElementById("btn-left").innerText = "YES";
-    document.getElementById("btn-right").classList.remove("hidden");
-    updateUI();
-    return;
+function updateDots(curr){
+  const dots = document.getElementById('progress-dots').children;
+  for(let i=0; i<dots.length; i++){
+    dots[i].className = 'progress-dot' + (i===curr?' active':(i<curr?' passed':''));
   }
-
-  // 診断終了後の「最初に戻る」処理
-  if (step === "result") {
-    step = 0;
-    route = "";
-    excluded.clear();
-    document.getElementById("title-text").innerText = "WONDER SLOT HO診断";
-    document.getElementById("display-image").src = "KV_wanderslot.jpg";
-    document.getElementById("question-text").innerText = "あなたにマッチするハンドアウト(HO)を診断します。";
-    document.getElementById("btn-left").innerText = "診断をスタートする";
-    document.getElementById("btn-right").classList.add("hidden");
-    return;
-  }
-
-  const q = getQuestionText(step - 1);
-
-  // 1〜4問目：地雷チェックの除外登録
-  if (q.type === "filter" && isYes) {
-    q.tag.forEach(id => excluded.add(id));
-  }
-
-  // 5問目：陣営選択
-  if (q.type === "route_select") {
-    route = isYes ? "grant" : "east";
-    step = 6; // 次はステップ6（インデックス5の質問）へ
-    updateUI();
-    return;
-  }
-
-  // 6問目以降：各ルートの分岐ツリー
-  if (route === "grant") {
-    if (step === 6) {
-      step = isYes ? 7 : 8; // YESならQ6、NOならQ7へ
-    } else if (step === 7) {
-      finalize(isYes ? "MOMMY" : "DADDY"); return;
-    } else if (step === 8) {
-      step = isYes ? 9 : 10; // YESならQ8(Brain)、NOならQ9(Fighter)へ
-    } else if (step === 9) {
-      finalize(isYes ? "SISTER" : "KID"); return;
-    } else if (step === 10) {
-      finalize(isYes ? "MAID" : "BROTHER"); return;
-    }
-  } else if (route === "east") {
-    if (step === 6) {
-      step = isYes ? 7 : 8; // YESならQ6、NOならQ7へ
-    } else if (step === 7) {
-      finalize(isYes ? "HAMMER" : "SECOND"); return;
-    } else if (step === 8) {
-      step = isYes ? 9 : 10; // YESならQ8、NOならQ9へ
-    } else if (step === 9) {
-      finalize(isYes ? "WIRE" : "HAWK"); return;
-    } else if (step === 10) {
-      finalize(isYes ? "CHARM" : "VEIN"); return;
-    }
-  }
-
-  updateUI();
 }
 
-// 質問文とボタン文字の書き換え
-function updateUI() {
-  const q = getQuestionText(step - 1);
-  document.getElementById("question-text").innerText = q.text;
+function startDiag(){
+  // トータル質問数: 地雷4問 + 陣営1問 + 各ルート最大分岐問
+  initDots(7); 
+  fi = 0;
+  factionBranch = null;
+  dStep = 0;
+  excluded.clear();
+  showScreen('question');
+  showFilterQuestion();
+}
 
-  // ボタンのカスタムラベル（Brain / Fighterなど）があれば適用、なければYES/NO
-  if (q.labels) {
-    document.getElementById("btn-left").innerText = q.labels[0];
-    document.getElementById("btn-right").innerText = q.labels[1];
+function showFilterQuestion(){
+  updateDots(fi);
+  document.getElementById('question-text').textContent = FILTERS[fi].text;
+  setBtnLabels('YES', 'NO');
+}
+
+function showFactionQuestion(){
+  updateDots(4);
+  document.getElementById('question-text').textContent = FACTION_Q.text;
+  setBtnLabels('YES', 'NO');
+}
+
+function showBranchQuestion(){
+  updateDots(5 + (dStep > 2 ? 1 : 0)); // ドット進行をスムーズに見せる調整
+  const q = BRANCH_QS[factionBranch][dStep];
+  document.getElementById('question-text').textContent = q.text;
+  if(q.labels){
+    setBtnLabels(q.labels[0], q.labels[1]);
   } else {
-    document.getElementById("btn-left").innerText = "YES";
-    document.getElementById("btn-right").innerText = "NO";
+    setBtnLabels('YES', 'NO');
   }
 }
 
-// 地雷チェックを考慮した最終決定セーフティネット
-function finalize(targetId) {
+function setBtnLabels(y, n){
+  document.getElementById('btn-y').textContent = y;
+  document.getElementById('btn-n').textContent = n;
+}
+
+function ans(isYes){
+  // 1. 地雷フィルター質問（4問）
+  if(fi < 4){
+    if(isYes){
+      FILTERS[fi].tags.forEach(t => excluded.add(t));
+    }
+    fi++;
+    if(fi === 4){
+      showFactionQuestion();
+    } else {
+      showFilterQuestion();
+    }
+    return;
+  }
+
+  // 2. 陣営選択質問
+  if(factionBranch === null){
+    factionBranch = isYes ? 'grant' : 'east';
+    dStep = 0;
+    showBranchQuestion();
+    return;
+  }
+
+  // 3. ルート個別詳細分岐
+  if(factionBranch === 'grant'){
+    if(dStep === 0){
+      dStep = isYes ? 1 : 2; // YESならQ6、NOならQ7へ
+      showBranchQuestion();
+    } else if(dStep === 1){
+      finalize(isYes ? 'HO MOMMY' : 'HO DADDY');
+    } else if(dStep === 2){
+      dStep = isYes ? 3 : 4; // YESならQ8(Brain)、NOならQ9(Fighter)へ
+      showBranchQuestion();
+    } else if(dStep === 3){
+      finalize(isYes ? 'HO SISTER' : 'HO KID');
+    } else if(dStep === 4){
+      finalize(isYes ? 'HO MAID' : 'HO BROTHER');
+    }
+  } else if(factionBranch === 'east'){
+    if(dStep === 0){
+      dStep = isYes ? 1 : 2; // YESならQ6、NOならQ7へ
+      showBranchQuestion();
+    } else if(dStep === 1){
+      finalize(isYes ? 'HO HAMMER' : 'HO SECOND');
+    } else if(dStep === 2){
+      dStep = isYes ? 3 : 4; // YESならQ8、NOならQ9へ
+      showBranchQuestion();
+    } else if(dStep === 3){
+      finalize(isYes ? 'HO WIRE' : 'HO HAWK');
+    } else if(dStep === 4){
+      finalize(isYes ? 'HO CHARM' : 'HO VEIN');
+    }
+  }
+}
+
+// 地雷（除外）を考慮した最終決定セーフティネット
+function finalize(targetId){
   let finalId = targetId;
 
-  // もし導き出されたキャラが地雷（除外対象）だった場合
-  if (excluded.has(targetId)) {
-    // 同じ陣営（route）の中で、地雷に引っかかっていない代替キャラを自動検索
-    const alternatives = Object.keys(characters).filter(id => characters[id].route === route && !excluded.has(id));
-    if (alternatives.length > 0) {
-      finalId = alternatives[0]; // 1番近い代替キャラをセット
+  // もし辿り着いたHOが事前にYESと答えたNG（地雷）に含まれていた場合
+  if(excluded.has(targetId)){
+    // 同じ陣営(faction)の中で、まだ除外されていない他のHOを自動探索
+    const alternatives = Object.keys(CHARS).filter(id => CHARS[id].faction === factionBranch && !excluded.has(id));
+    if(alternatives.length > 0){
+      finalId = alternatives[0]; // 条件に合う最も近い代替キャラクターを選択
     }
   }
 
   showResult(finalId);
 }
 
-// 結果表示（元の画像切り替えロジック・テキスト反映を完全再現）
-function showResult(charId) {
-  step = "result";
-  const char = characters[charId];
-
-  // タイトルをHO名に書き換え
-  document.getElementById("title-text").innerText = "診断結果";
+function showResult(key){
+  const c = CHARS[key];
+  const isGrant = (c.faction === 'grant');
   
-  // 中央の画像を該当キャラクターのイラストファイルに差し替え
-  document.getElementById("display-image").src = char.img;
+  document.getElementById('result-img').src = CHAR_IMGS[key];
+  document.getElementById('result-img').alt = key;
   
-  // キャラクター名と詳細テキストを表示
-  document.getElementById("question-text").innerHTML = `
-    <div class="result-title">${char.name}</div>
-    <div class="result-desc">${char.desc}</div>
-  `;
+  const fb = document.getElementById('result-fb');
+  fb.textContent = isGrant ? 'Grant Family — グラントファミリー' : 'East Hounds — イーストハウンズ';
+  fb.className = 'result-faction-badge ' + (isGrant ? 'rfb-grant' : 'rfb-east');
+  
+  const rn = document.getElementById('result-name');
+  rn.textContent = key;
+  rn.className = 'result-name ' + (isGrant ? 'result-name-grant' : 'result-name-east');
+  
+  document.getElementById('result-jp').textContent = '— ' + c.jp + ' —';
+  document.getElementById('result-catch').textContent = c.catch;
+  document.getElementById('result-profile').textContent = c.profile;
+  
+  showScreen('result');
+}
 
-  // ボタンを「最初に戻る」に変更
-  document.getElementById("btn-left").innerText = "もう一度診断する";
-  document.getElementById("btn-right").classList.add("hidden");
+function restart(){
+  excluded.clear();
+  fi = 0;
+  factionBranch = null;
+  dStep = 0;
+  showScreen('start');
+}
+
+function share(){
+  const name = document.getElementById('result-name').textContent;
+  const jp = document.getElementById('result-jp').textContent.replace(/^— /,'').replace(/ —$/,'');
+  const cat = document.getElementById('result-catch').textContent;
+  const faction = document.getElementById('result-fb').textContent.split('—')[0].trim();
+  const txt = `【ワンダースロット キャラクター診断結果】\n所属：${faction}\nキャラクター：${name}（${jp}）\n「${cat}」\n#アナアキー #ワンダースロット`;
+  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(txt)}`;
+  window.open(url, '_blank');
 }
 </script>
 </body>
