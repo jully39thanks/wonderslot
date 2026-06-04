@@ -2,353 +2,277 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ワンダースロット キャラクター診断</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WONDER SLOT HO診断</title>
 <style>
-/* リセット & 基本設定 */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{
-  min-height:100vh;
-  background:#050508;
-  color:#e8dcc8;
-  font-family:'Noto Sans JP', sans-serif;
-  overflow-x:hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* 背景画像：見切れないように 'contain' に設定
-   上下の余白は雰囲気のあるディープブラックで自然に埋まります
-*/
-.page-bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  background-image: linear-gradient(180deg, rgba(5, 5, 8, 0.7) 0%, rgba(5, 5, 8, 0.9) 100%), url('KV_wanderslot.jpg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* メインコンテナ */
-.container {
-  position: relative;
-  z-index: 1;
-  width: 90%;
-  max-width: 480px;
-  margin: 20px auto;
-  padding: 40px 20px;
-  background: rgba(15, 15, 25, 0.85);
-  border: 1px solid rgba(232, 220, 200, 0.2);
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 20px rgba(232, 220, 200, 0.05);
-  text-align: center;
-}
-
-/* スタイリッシュ英語フォント */
-.en-text {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.1em;
-}
-
-/* タイトルエリア */
-.title-area {
-  margin-bottom: 25px;
-}
-.sub-title {
-  font-size: 1rem;
-  color: #c5a880;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-.main-title {
-  font-size: 1.8rem;
-  font-weight: 900;
-  line-height: 1.3;
-  text-shadow: 0 0 10px rgba(232, 220, 200, 0.3);
-}
-
-/* 進捗ステップ表記 */
-.progress-area {
-  font-size: 1.2rem;
-  color: #c5a880;
-  margin-bottom: 20px;
-}
-
-/* テキスト表示エリア */
-.display-text {
-  font-size: 0.95rem;
-  font-weight: 400;
-  line-height: 1.8;
-  margin-bottom: 35px;
-  color: #d1c7b7;
-  min-height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-}
-#start-screen .display-text, #result-screen .display-text {
-  text-align: center;
-}
-
-/* 診断結果用装飾 */
-.result-ho {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #e8dcc8;
-  margin-bottom: 5px;
-  letter-spacing: 0.05em;
-}
-.result-copy {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #c5a880;
-  margin-bottom: 20px;
-}
-
-/* ボタン */
-.btn-group {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-  width: 100%;
-}
-.action-btn {
-  display: inline-block;
-  width: 100%;
-  max-width: 280px;
-  padding: 16px 32px;
-  background: linear-gradient(135deg, #c5a880 0%, #a38558 100%);
-  color: #050508;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(163, 133, 88, 0.3);
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-.action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(232, 220, 200, 0.5);
-  background: linear-gradient(135deg, #e8dcc8 0%, #c5a880 100%);
-}
-.action-btn:active {
-  transform: translateY(1px);
-}
-
-.hidden { display: none !important; }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-image: url('bg.jpg'); /* 元の背景画像 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  .container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: rgba(15, 23, 42, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border: 2px solid #3b82f6;
+  }
+  h1 {
+    color: #3b82f6;
+    margin-bottom: 20px;
+  }
+  .btn {
+    display: block;
+    width: 80%;
+    margin: 15px auto;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .btn:hover {
+    background-color: #1d4ed8;
+  }
+  .btn-container {
+    margin-top: 30px;
+  }
+  /* キャラクター・KV画像表示エリア */
+  .image-container {
+    margin-bottom: 20px;
+  }
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .hidden {
+    display: none;
+  }
+  .result-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f59e0b;
+    margin-top: 20px;
+  }
+  .result-desc {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: left;
+  }
 </style>
 </head>
 <body>
 
-<div class="page-bg"></div>
-
 <div class="container">
-  <div id="start-screen">
-    <header class="title-area">
-      <p class="sub-title en-text">WONDER SLOT</p>
-      <h1 class="main-title">あなたにぴったりのHOは？<br>ワンダースロット キャラクター診断</h1>
-    </header>
-    <div class="display-text">
-      簡単な質問に答えて、あなたのプレイスタイルや性格に最適なハンドアウト（HO）をスロットの役に例えて診断します！
-    </div>
-    <div class="btn-group">
-      <button class="action-btn" onclick="startDiagnosis()">診断を始める</button>
-    </div>
+  <!-- タイトル -->
+  <h1 id="title-text">WONDER SLOT HO診断</h1>
+
+  <!-- 画像表示エリア（初期はKV、結果時はキャラ絵に変倍） -->
+  <div class="image-container">
+    <img id="display-image" src="KV_wanderslot.jpg" alt="WONDER SLOT">
   </div>
 
-  <div id="quiz-screen" class="hidden">
-    <div class="progress-area en-text" id="step-counter">Step 1</div>
-    <div class="display-text" id="question-text">質問文</div>
-    <div class="btn-group">
-      <button class="action-btn" id="btn-yes" onclick="handleAnswer(true)">YES</button>
-      <button class="action-btn" id="btn-no" onclick="handleAnswer(false)">NO</button>
-    </div>
+  <!-- 質問・説明文テキスト -->
+  <div id="question-text" style="font-size: 18px; margin: 20px 0; min-height: 60px;">
+    あなたにマッチするハンドアウト(HO)を診断します。
   </div>
 
-  <div id="result-screen" class="hidden">
-    <header class="title-area">
-      <p class="sub-title en-text">DIAGNOSIS RESULT</p>
-      <div class="result-ho en-text" id="result-ho-name">HO名</div>
-      <div class="result-copy" id="result-ho-copy">キャッチコピー</div>
-    </header>
-    <div class="display-text" id="result-ho-desc">キャラクター紹介文</div>
-    <div class="btn-group">
-      <button class="action-btn" onclick="resetDiagnosis()">もう一度診断する</button>
-    </div>
+  <!-- ボタンエリア -->
+  <div class="btn-container">
+    <button id="btn-left" class="btn" onclick="handleChoice(true)">診断をスタートする</button>
+    <button id="btn-right" class="btn hidden" onclick="handleChoice(false)">NO</button>
   </div>
 </div>
 
 <script>
-// キャラクターデータベース
+// キャラクターデータ（画像パス、テキストを完全保持）
 const characters = {
-  DADDY: { name: "DADDY（ダディー）", copy: "冷静沈着な一家の大黒柱", desc: "あなたは冷静沈着な性格で、チームでは一家の大黒柱という役割を担っています。周囲をまとめ上げ、圧倒的な包容力と決断力で家族を正しい道へと導くことが得意です。", route: "grant" },
-  MOMMY: { name: "MOMMY（マミー）", copy: "自由奔放でチャーミングな美魔女", desc: "あなたは自由奔放でチャーミングな性格で、チームでは華やかなムードメーカーという役割を担っています。お茶目な魅力の裏で巧みに情報を操り、場を翻弄することが得意です。", route: "grant" },
-  BROTHER: { name: "BROTHER（ブラザー）", copy: "正義感あふれる真っ直ぐな好青年", desc: "あなたは正義感あふれる真っ直ぐな性格で、チームでは前線で仲間を守る盾という役割を担っています。嘘偽りのない誠実さと、家族のために体を張る熱い行動力が魅力です。", route: "grant" },
-  SISTER: { name: "SISTER（シスター）", copy: "好奇心旺盛で器用な情報通ギャル", desc: "あなたは好奇心旺盛で器用な性格で、チームでは軽快に街を駆ける情報屋という役割を担っています。人当たりの良さを武器にターゲットの懐に潜り込み、スクープを持ち帰ることが得意です。", route: "grant" },
-  KID: { name: "KID（キッド）", copy: "大人を凌駕する知能を持つ若き知能派", desc: "あなたは大人を凌駕する極めて高い知能の持ち主で、チームでは影の作戦立案者という役割を担っています。感情に流されず、緻密な計算とスキルで家族の危機をスマートに救います。", route: "grant" },
-  MAID: { name: "MAID（メイド）", copy: "クールに仕事を完遂する凄腕の用心棒", desc: "あなたはクールでストイックな性格で、チームでは影から標的を排除する用心棒という役割を担っています。無駄な会話を好まず、与えられたミッションを確実に物理で解決するプロフェッショナルです。", route: "grant" },
-  SECOND: { name: "SECOND（セカンド）", copy: "策略とカリスマで君臨する組織のボス", desc: "あなたは圧倒的な実力とカリスマ性を備えた性格で、チームでは絶対的な組織の指導者という役割を担っています。周囲を従わせる威厳と、冷徹とも言える策略でチームを勝利へ導きます。", route: "east" },
-  HAMMER: { name: "HAMMER（ハンマー）", copy: "拳で語る最強の武闘派戦闘員", desc: "あなたは言葉よりも行動を重んじる性格で、チームでは特攻隊長・最強の戦闘員という役割を担っています。威圧的な態度と破壊的な戦闘力で、立ち塞がる敵を力技でねじ伏せるのが得意です。", route: "east" },
-  VEIN: { name: "VEIN（ヴェイン）", copy: "鋭い観察眼を持つ冷静な交渉役", desc: "あなたは鋭い観察眼と冷静さを併せ持つ性格で、チームでは裏社会の流通や取引を支配する交渉役という役割を担っています。相手の本心を見抜き、冷徹に有利な条件を引き出すのが得意です。", route: "east" },
-  WIRE: { name: "WIRE（ワイヤー）", copy: "サバサバした性格の技術屋", desc: "あなたはサバサバとして迷いのない性格で、チームでは爆発物や機械を扱うエキスパートという役割を担っています。専門的な技術を武器に、状況に応じた最適なトラップやガジェットを駆使します。", route: "east" },
-  CHARM: { name: "CHARM（チャーム）", copy: "愛嬌と度胸を武器にする不敵な交渉屋", desc: "あなたは底知れない愛嬌と度胸を武器にする性格で、チームでは相手の油断を誘う交渉・潜入役という役割を担っています。物怖じしないスタンスで相手の懐へ飛び込み、主導権を奪うのが得意です。", route: "east" },
-  HAWK: { name: "HAWK（ホーク）", copy: "静寂の中で獲物を射抜く凄腕スナイパー", desc: "あなたは静寂を愛する極めて寡黙な性格で、チームでは遠距離から仲間を絶対的に援護するスナイパーという役割を担っています。気配を消し、確実に一撃で仕事をこなすエキスパートです。", route: "east" }
+  DADDY: { name: "HO DADDY", img: "daddy.jpg", desc: "冷静沈着な一家の大黒柱。周囲をまとめ上げ、圧倒的な包容力と決断力で家族を正しい道へと導くポジションです。", route: "grant" },
+  MOMMY: { name: "HO MOMMY", img: "mommy.jpg", desc: "自由奔放でチャーミングな美魔女。お茶目な魅力の裏で巧みに情報を操り、場を翻弄するポジションです。", route: "grant" },
+  BROTHER: { name: "HO BROTHER", img: "brother.jpg", desc: "正義感あふれる真っ直ぐな好青年。嘘偽りのない誠実さと、家族のために体を張る熱い行動力が魅力のポジションです。", route: "grant" },
+  SISTER: { name: "HO SISTER", img: "sister.jpg", desc: "好奇心旺盛で器用な情報通ギャル。人当たりの良さを武器にターゲットの懐に潜り込み、スクープを持ち帰るポジションです。", route: "grant" },
+  KID: { name: "HO KID", img: "kid.jpg", desc: "大人を領駕する知能を持つ若き知能派。感情に流されず、緻密な計算とスキルで家族の危機をスマートに救うポジションです。", route: "grant" },
+  MAID: { name: "HO MAID", img: "maid.jpg", desc: "クールに仕事を完遂する凄腕の用心棒。無駄な会話を好まず、与えられたミッションを確実に物理で解決するポジションです。", route: "grant" },
+  SECOND: { name: "HO SECOND", img: "second.jpg", desc: "策略とカリスマで君臨する組織のボス。周囲を従わせる威厳と、冷徹とも言える策略でチームを勝利へ導くポジションです。", route: "east" },
+  HAMMER: { name: "HO HAMMER", img: "hammer.jpg", desc: "拳で語る最強の武闘派戦闘員。威圧的な態度と破壊的な戦闘力で、立ち塞がる敵を力技でねじ伏せるポジションです。", route: "east" },
+  VEIN: { name: "HO VEIN", img: "vein.jpg", desc: "鋭い観察眼を持つ冷静な交渉役。裏社会の流通や取引を支配し、相手の本心を見抜いて冷徹に有利な条件を引き出すポジションです。", route: "east" },
+  WIRE: { name: "HO WIRE", img: "wire.jpg", desc: "サバサバした性格の技術屋。専門的な技術を武器に、状況に応じた最適なトラップやガジェットを駆使するポジションです。", route: "east" },
+  CHARM: { name: "HO CHARM", img: "charm.jpg", desc: "愛嬌と度胸を武器にする不敵な交渉屋。物怖じしないスタンスで相手の懐へ飛び込み、主導権を奪うポジションです。", route: "east" },
+  HAWK: { name: "HO HAWK", img: "hawk.jpg", desc: "静寂の中で獲物を射抜く凄腕スナイパー。気配を消し、確実に一撃で仕事をこなす遠距離支援ポジションです。", route: "east" }
 };
 
-// 状態管理
-let currentQuestionIndex = 0;
-let stepCounter = 1;
-let route = ""; // "grant" または "east"
-let excludedCharacters = new Set(); // 地雷チェックで除外されたキャラ
+// 状態変数
+let step = 0; 
+let route = ""; 
+let excluded = new Set(); 
 
-// 質問進行ロジック
-function getQuestion() {
-  // 1〜4問目：地雷チェック
-  if (currentQuestionIndex === 0) return { text: "物語の中で特定の相手との恋愛・夫婦的なやり取り（RP）は避けたいですか?", type: "filter", tag: ["BROTHER", "CHARM", "DADDY", "MOMMY"] };
-  if (currentQuestionIndex === 1) return { text: "全体をまとめたり指揮を執ったりする『リーダー役』は苦手ですか?", type: "filter", tag: ["DADDY", "SECOND"] };
-  if (currentQuestionIndex === 2) return { text: "威圧的な態度をとったり厳しい言葉を使ったりするキャラクターは避けたいですか?", type: "filter", tag: ["HAMMER", "SECOND"] };
-  if (currentQuestionIndex === 3) return { text: "あまり喋らない『クール・寡黙すぎる』キャラクターよりもたくさん会話を楽しめるキャラがいいですか?", type: "filter", tag: ["MAID", "HAWK"] };
+// 質問データの定義
+function getQuestionText(stepIndex) {
+  const questions = [
+    { text: "物語の中で特定の相手との恋愛・夫婦的なやり取り（RP）は避けたいですか?", type: "filter", tag: ["BROTHER", "CHARM", "DADDY", "MOMMY"] },
+    { text: "全体をまとめたり指揮を執ったりする『リーダー役』は苦手ですか?", type: "filter", tag: ["DADDY", "SECOND"] },
+    { text: "威圧的な態度をとったり厳しい言葉を使ったりするキャラクターは避けたいですか?", type: "filter", tag: ["HAMMER", "SECOND"] },
+    { text: "あまり喋らない『クール・寡黙すぎる』キャラクターよりもたくさん会話を楽しめるキャラがいいですか?", type: "filter", tag: ["MAID", "HAWK"] },
+    { text: "あなたが惹かれるのは、正義のために悪を成敗する『義賊の絆』ですか?", type: "route_select" }
+  ];
   
-  // 5問目：陣営選択
-  if (currentQuestionIndex === 4) return { text: "あなたが惹かれるのは、正義のために悪を成敗する『義賊の絆』ですか?", type: "route_select" };
-  
-  // 6問目〜：ルート別詳細診断（美しく2択に分かれるツリー構造）
+  if (stepIndex < 5) return questions[stepIndex];
+
+  // 義賊ルート（グラントファミリー）の詳細分岐
   if (route === "grant") {
-    if (currentQuestionIndex === 5) return { text: "チームを引っ張るリーダーシップや、大人の落ち着き・包容力に魅力を感じますか?", type: "branch" };
-    if (currentQuestionIndex === 6) return { text: "どちらかと言えば、自分から積極的に楽しむ自由奔放なタイプですか?", type: "branch" }; // 前問YESのルート
-    if (currentQuestionIndex === 7) return { text: "頭脳・情報収集・スキルを使って、スマートに立ち回るのが好きですか?", type: "branch" }; // 前問NOのルート
-    if (currentQuestionIndex === 8) return { text: "場を盛り上げる、明るく賑やかなキャラクターがいいですか?", type: "branch" }; // 前々問NO→前問YES
-    if (currentQuestionIndex === 9) return { text: "自分の感情をあまり表に出さない、クールでストイックな仕事人に惹かれますか?", type: "branch" }; // 前々問NO→前問NO
-  } else if (route === "east") {
-    if (currentQuestionIndex === 5) return { text: "組織を引っ張るボスや、圧倒的な戦闘力で前線を張り、敵をねじ伏せる役割が好きですか?", type: "branch" };
-    if (currentQuestionIndex === 6) return { text: "知略やカリスマで周囲を従わせるよりも、自分の『拳や行動』で語る方が魅力的ですか?", type: "branch" }; // 前問YES
-    if (currentQuestionIndex === 7) return { text: "爆弾や狙撃など、物理的な『特殊技術』を扱うポジションに惹かれますか?", type: "branch" }; // 前問NO
-    if (currentQuestionIndex === 8) return { text: "サバサバした性格で、機械や爆破物を扱うのが得意な方がいいですか?", type: "branch" }; // 前々問NO→前問YES
-    if (currentQuestionIndex === 9) return { text: "愛嬌を武器に相手の懐に飛び込むような、物怖じしないタイプが好きですか?", type: "branch" }; // 前々問NO→前問NO
+    if (stepIndex === 5) return { text: "チームを引っ張るリーダーシップや、大人の落ち着き・包容力に魅力を感じますか?", type: "branch" };
+    if (stepIndex === 6) return { text: "どちらかと言えば、自分から積極的に楽しむ自由奔放なタイプですか?", type: "branch" };
+    {/* Q7-A1の断絶を解消: 頭脳・スキル派か、武闘派（MAID/BROTHER）かを問う質問 */}
+    if (stepIndex === 7) return { text: "頭脳・スキル・情報収集を活かす『Brain』タイプと、前線で戦う『Fighter』タイプならどちらが好きですか?", type: "branch", labels: ["Brain", "Fighter"] };
+    if (stepIndex === 8) return { text: "場を盛り上げる、明るく賑やかなキャラクターがいいですか?", type: "branch" };
+    if (stepIndex === 9) return { text: "自分の感情をあまり表に出さない、クールでストイックな仕事人に惹かれますか?", type: "branch" };
+  } 
+  
+  // ギャングルート（イーストハウンズ）の詳細分岐
+  if (route === "east") {
+    if (stepIndex === 5) return { text: "組織を引っ張るボスや、圧倒的な戦闘力で前線を張り、敵をねじ伏せる役割が好きですか?", type: "branch" };
+    if (stepIndex === 6) return { text: "知略やカリスマで周囲を従わせるよりも、自分の『拳や行動』で語る方が魅力的ですか?", type: "branch" };
+    if (stepIndex === 7) return { text: "爆弾や狙撃など、物理的な『特殊技術』を扱うポジションに惹かれますか?", type: "branch" };
+    if (stepIndex === 8) return { text: "サバサバした性格で、機械や爆破物を扱うのが得意な方がいいですか?", type: "branch" };
+    if (stepIndex === 9) return { text: "愛嬌を武器に相手の懐に飛び込むような、物怖じしないタイプが好きですか?", type: "branch" };
   }
 }
 
-function startDiagnosis() {
-  document.getElementById("start-screen").classList.add("hidden");
-  document.getElementById("quiz-screen").classList.remove("hidden");
-  currentQuestionIndex = 0;
-  stepCounter = 1;
-  route = "";
-  excludedCharacters.clear();
-  showQuestion();
-}
-
-function showQuestion() {
-  const q = getQuestion();
-  document.getElementById("step-counter").innerText = `Step ${stepCounter}`;
-  
-  // 専用選択肢（Brain / Fighter）の切り替え処理
-  const btnYes = document.getElementById("btn-yes");
-  const btnNo = document.getElementById("btn-no");
-  
-  if (q.text.includes("頭脳・スキル・情報収集")) {
-    btnYes.innerText = "Brain";
-    btnNo.innerText = "Fighter";
-  } else {
-    btnYes.innerText = "YES";
-    btnNo.innerText = "NO";
-  }
-  
-  document.getElementById("question-text").innerText = q.text;
-}
-
-function handleAnswer(isYes) {
-  const q = getQuestion();
-  
-  // 地雷フィルタリング処理
-  if (q.type === "filter" && isYes) {
-    q.tag.forEach(char => excludedCharacters.add(char));
-  }
-  
-  // 陣営分岐処理
-  if (q.type === "route_select") {
-    route = isYes ? "grant" : "east";
-    currentQuestionIndex = 5; // 各ルートの最初の質問へ
-    stepCounter++;
-    showQuestion();
+// ボタンクリック時の進行制御
+function handleChoice(isYes) {
+  // スタート画面からの遷移
+  if (step === 0) {
+    step = 1;
+    document.getElementById("btn-left").innerText = "YES";
+    document.getElementById("btn-right").classList.remove("hidden");
+    updateUI();
     return;
   }
-  
-  // 詳細ルートの分岐ロジック
+
+  // 診断終了後の「最初に戻る」処理
+  if (step === "result") {
+    step = 0;
+    route = "";
+    excluded.clear();
+    document.getElementById("title-text").innerText = "WONDER SLOT HO診断";
+    document.getElementById("display-image").src = "KV_wanderslot.jpg";
+    document.getElementById("question-text").innerText = "あなたにマッチするハンドアウト(HO)を診断します。";
+    document.getElementById("btn-left").innerText = "診断をスタートする";
+    document.getElementById("btn-right").classList.add("hidden");
+    return;
+  }
+
+  const q = getQuestionText(step - 1);
+
+  // 1〜4問目：地雷チェックの除外登録
+  if (q.type === "filter" && isYes) {
+    q.tag.forEach(id => excluded.add(id));
+  }
+
+  // 5問目：陣営選択
+  if (q.type === "route_select") {
+    route = isYes ? "grant" : "east";
+    step = 6; // 次はステップ6（インデックス5の質問）へ
+    updateUI();
+    return;
+  }
+
+  // 6問目以降：各ルートの分岐ツリー
   if (route === "grant") {
-    if (currentQuestionIndex === 5) {
-      currentQuestionIndex = isYes ? 6 : 7;
-    } else if (currentQuestionIndex === 6) {
+    if (step === 6) {
+      step = isYes ? 7 : 8; // YESならQ6、NOならQ7へ
+    } else if (step === 7) {
       finalize(isYes ? "MOMMY" : "DADDY"); return;
-    } else if (currentQuestionIndex === 7) {
-      currentQuestionIndex = isYes ? 8 : 9;
-    } else if (currentQuestionIndex === 8) {
+    } else if (step === 8) {
+      step = isYes ? 9 : 10; // YESならQ8(Brain)、NOならQ9(Fighter)へ
+    } else if (step === 9) {
       finalize(isYes ? "SISTER" : "KID"); return;
-    } else if (currentQuestionIndex === 9) {
+    } else if (step === 10) {
       finalize(isYes ? "MAID" : "BROTHER"); return;
     }
   } else if (route === "east") {
-    if (currentQuestionIndex === 5) {
-      currentQuestionIndex = isYes ? 6 : 7;
-    } else if (currentQuestionIndex === 6) {
+    if (step === 6) {
+      step = isYes ? 7 : 8; // YESならQ6、NOならQ7へ
+    } else if (step === 7) {
       finalize(isYes ? "HAMMER" : "SECOND"); return;
-    } else if (currentQuestionIndex === 7) {
-      currentQuestionIndex = isYes ? 8 : 9;
-    } else if (currentQuestionIndex === 8) {
+    } else if (step === 8) {
+      step = isYes ? 9 : 10; // YESならQ8、NOならQ9へ
+    } else if (step === 9) {
       finalize(isYes ? "WIRE" : "HAWK"); return;
-    } else if (currentQuestionIndex === 9) {
+    } else if (step === 10) {
       finalize(isYes ? "CHARM" : "VEIN"); return;
     }
-  } else {
-    currentQuestionIndex++;
   }
-  
-  stepCounter++;
-  showQuestion();
+
+  updateUI();
 }
 
-// 最終決定とセーフティネット
+// 質問文とボタン文字の書き換え
+function updateUI() {
+  const q = getQuestionText(step - 1);
+  document.getElementById("question-text").innerText = q.text;
+
+  // ボタンのカスタムラベル（Brain / Fighterなど）があれば適用、なければYES/NO
+  if (q.labels) {
+    document.getElementById("btn-left").innerText = q.labels[0];
+    document.getElementById("btn-right").innerText = q.labels[1];
+  } else {
+    document.getElementById("btn-left").innerText = "YES";
+    document.getElementById("btn-right").innerText = "NO";
+  }
+}
+
+// 地雷チェックを考慮した最終決定セーフティネット
 function finalize(targetId) {
-  let finalCharacterId = targetId;
-  
-  // もし選ばれたキャラクターが地雷チェックで除外されていた場合
-  if (excludedCharacters.has(targetId)) {
-    // 同じルート内で、まだ除外されていないキャラクターを探す
-    const backupList = Object.keys(characters).filter(id => characters[id].route === route && !excludedCharacters.has(id));
-    
-    if (backupList.length > 0) {
-      // 候補があればその中から決定（近い属性を保持）
-      finalCharacterId = backupList[0];
-    } else {
-      // 最悪、すべて除外されていた場合はシステムエラーを防ぐためそのまま元キャラを提示
-      finalCharacterId = targetId;
+  let finalId = targetId;
+
+  // もし導き出されたキャラが地雷（除外対象）だった場合
+  if (excluded.has(targetId)) {
+    // 同じ陣営（route）の中で、地雷に引っかかっていない代替キャラを自動検索
+    const alternatives = Object.keys(characters).filter(id => characters[id].route === route && !excluded.has(id));
+    if (alternatives.length > 0) {
+      finalId = alternatives[0]; // 1番近い代替キャラをセット
     }
   }
-  
-  showResult(finalCharacterId);
+
+  showResult(finalId);
 }
 
+// 結果表示（元の画像切り替えロジック・テキスト反映を完全再現）
 function showResult(charId) {
-  document.getElementById("quiz-screen").classList.add("hidden");
-  document.getElementById("result-screen").classList.remove("hidden");
-  
+  step = "result";
   const char = characters[charId];
-  document.getElementById("result-ho-name").innerText = char.name;
-  document.getElementById("result-ho-copy").innerText = char.copy;
-  document.getElementById("result-ho-desc").innerText = char.desc;
-}
 
-function resetDiagnosis() {
-  document.getElementById("result-screen").classList.add("hidden");
-  document.getElementById("start-screen").classList.remove("hidden");
+  // タイトルをHO名に書き換え
+  document.getElementById("title-text").innerText = "診断結果";
+  
+  // 中央の画像を該当キャラクターのイラストファイルに差し替え
+  document.getElementById("display-image").src = char.img;
+  
+  // キャラクター名と詳細テキストを表示
+  document.getElementById("question-text").innerHTML = `
+    <div class="result-title">${char.name}</div>
+    <div class="result-desc">${char.desc}</div>
+  `;
+
+  // ボタンを「最初に戻る」に変更
+  document.getElementById("btn-left").innerText = "もう一度診断する";
+  document.getElementById("btn-right").classList.add("hidden");
 }
 </script>
 </body>
